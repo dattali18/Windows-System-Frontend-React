@@ -1,12 +1,12 @@
 // React
+// Components
+import Router from './components/router/router'
 // Styles
 import './App.css'
 
 function App() {
   return (
-    <>
-      <h1>Hello World</h1>
-    </>
+    <Router/>
   )
 }
 
