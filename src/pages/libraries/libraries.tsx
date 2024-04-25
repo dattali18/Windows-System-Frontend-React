@@ -30,6 +30,7 @@ const Libraries = () => {
             libraries.map((library: { id: number; name: string, keywords: string, media: Media[] }) => (
               <li key={library.id}>
                 <LibraryItem 
+                id={library.id}
                 name={library.name}
                 keywords={library.keywords}
                 media={library.media}

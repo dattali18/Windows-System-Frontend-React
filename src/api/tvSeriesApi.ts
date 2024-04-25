@@ -36,7 +36,7 @@ const searchTvSeries = async (query: string, year?: number) => {
   }
 };
 
-const searchTvSeriesByImdbId = async (imdbId: string) => {
+const getTvSeriesByImdbId = async (imdbId: string) => {
   try {
     const response = await axios.get(`${BASE_URL}/TvSeries/search/${imdbId}`);
     return response.data;
@@ -61,5 +61,5 @@ export {
   getTvSeries,
   getTvSeriesById,
   searchTvSeries,
-  searchTvSeriesByImdbId,
+  getTvSeriesByImdbId,
 };

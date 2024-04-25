@@ -13,7 +13,7 @@ export const getAllLibraries = async () => {
 };
 
 // Function to get a library by ID
-export const getLibraryById = async (id: string) => {
+export const getLibraryById = async (id: number) => {
   try {
     const response = await axios.get(`${BASE_URL}/Libraries/${id}`);
     return response.data;

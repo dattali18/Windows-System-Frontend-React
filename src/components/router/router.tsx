@@ -1,8 +1,10 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 
-import Layout from "../layout/layout.tsx";
 import Home from "../../pages/home/home.tsx";
 import Libraries from "../../pages/libraries/libraries.tsx";
+import Library from "../../pages/library/library.tsx";
+import Media from "../../pages/media/media.tsx";
+import Layout from "../layout/layout.tsx";
 
 const Router = () => {
   return (
@@ -11,8 +13,8 @@ const Router = () => {
         <Route path="/" element={<Layout />}>
           <Route index element={<Home />} />
           <Route path="libraries" element={<Libraries />} />
-          <Route path="library/:libraryId" element={<h1>Library</h1>} />
-          <Route path="media/:mediaId" element={<h1>Media</h1>} />
+          <Route path="library/:libraryId" element={<Library />} />
+          <Route path="media/:mediaType/:imdbId" element={<Media />} />
           <Route path="library/create" element={<h1>Create Library</h1>} />
           <Route
             path="library:libraryId/update"
