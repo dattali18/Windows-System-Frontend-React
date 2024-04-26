@@ -7,6 +7,7 @@ import Media from "../../pages/media/media.tsx";
 import LibraryForm from "../../pages/libraryForm/libraryForm.tsx";
 import UpdateLibrary from "../../pages/updateLibrary/updateLibrary.tsx";
 import Search from "../../pages/search/search.tsx";
+import NotFoundPage from "../../pages/noPage/noPage.tsx";
 import Layout from "../layout/layout.tsx";
 
 const Router = () => {
@@ -24,7 +25,7 @@ const Router = () => {
             element={<UpdateLibrary />}
           />
           <Route path="search" element={<Search />} />
-          <Route path="*" element={<h1>Not Found</h1>} />
+          <Route path="*" element={<NotFoundPage />} />
         </Route>
       </Routes>
     </BrowserRouter>
