@@ -4,7 +4,13 @@ import { useParams } from "react-router-dom";
 import Library from "../../api/library.ts";
 import Media from "../../api/media.ts";
 
-import { getLibraryById } from "../../api/librariesApi";
+import {
+  addMovieToLibrary,
+  addTvSeriesToLibrary,
+  deleteMovieFromLibrary,
+  deleteTvSeriesFromLibrary,
+  getLibraryById,
+} from "../../api/librariesApi";
 import { searchMovies } from "../../api/moviesApi";
 import { searchTvSeries } from "../../api/tvSeriesApi";
 
@@ -23,6 +29,7 @@ const UpdateLibrary = () => {
   const [loadingMedias, setLoadingMedias] = useState(false);
 
   const [searchTerm, setSearchTerm] = useState("");
+  const [mediaType, setMediaType] = useState("movie");
 
   // fetch the library data
   useEffect(() => {
@@ -56,30 +63,59 @@ const UpdateLibrary = () => {
       setLoadingMedias(false);
     }
   };
+
+  const handleRemove = async (imdbID: string, mediaType: string) => {
+    try {
+      // check with the user is he is sure to remove the media
+      const confirmRemove = window.confirm(
+        "Are you sure you want to remove this media?"
+      );
+      if (!confirmRemove) {
+        return;
+      }
+      // console.log(`remove media with imdbID ${imdbID} & mediaType ${mediaType}`);
+      setLoadingLibrary(true);
+      if (mediaType === "movie") {
+        await deleteMovieFromLibrary(libraryIdNumber, imdbID);
+      } else if (mediaType === "series") {
+        await deleteTvSeriesFromLibrary(libraryIdNumber, imdbID);
+      }
+      const updatedLibrary = await getLibraryById(libraryIdNumber);
+      setLibrary(updatedLibrary);
+      setLoadingLibrary(false);
+    } catch (error) {
+      console.error("Error removing media:", error);
+    } finally {
+      setLoadingLibrary(false);
+    }
+  };
+
+  const handleAdd = async (imdbID: string, mediaType: string) => {
+    try {
+      setLoadingLibrary(true);
+      if (mediaType === "movie") {
+        await addMovieToLibrary(libraryIdNumber, imdbID);
+      } else {
+        await addTvSeriesToLibrary(libraryIdNumber, imdbID);
+      }
+      const updatedLibrary = await getLibraryById(libraryIdNumber);
+      setLibrary(updatedLibrary);
+      setLoadingLibrary(false);
+    } catch (error) {
+      console.error("Error adding media:", error);
+    } finally {
+      setLoadingLibrary(false);
+    }
+  };
+
   return (
     <>
       {loadingLibrary ? (
         <p>Loading library...</p>
       ) : (
-        <div>
-          <h2>{library.name}</h2>
-          <p>{library.keywords}</p>
-          <div>
-            {library.media.map((media: Media) => (
-              <li key={media.imdbID}>
-                <MediaItem
-                  title={media.title}
-                  year={media.year}
-                  type={media.type}
-                  poster={media.poster}
-                  imdbID={media.imdbID}
-                />
-              </li>
-            ))}
-          </div>
-        </div>
+        LibraryComponent(library, handleRemove)
       )}
-      <h2>Search</h2>
+      <h1>Search</h1>
       <input
         type="text"
         placeholder="Search for a movie or TV series"
@@ -87,9 +123,13 @@ const UpdateLibrary = () => {
           setSearchTerm(e.target.value);
         }}
       />
+      <select onChange={(e) => setMediaType(e.target.value)}>
+        <option value="movie">Movie</option>
+        <option value="tv">TV Series</option>
+      </select>
       <button
         onClick={() => {
-          handleSearch("movie", searchTerm);
+          handleSearch(mediaType, searchTerm);
         }}
       >
         Search
@@ -97,8 +137,55 @@ const UpdateLibrary = () => {
       {loadingMedias ? (
         <p>Loading...</p>
       ) : (
+        SearchMediaComponent(medias, handleAdd)
+      )}
+    </>
+  );
+};
+
+export default UpdateLibrary;
+
+function SearchMediaComponent(
+  medias: never[],
+  handleAdd: (imdbID: string, mediaType: string) => Promise<void>
+) {
+  return (
+    <div>
+      <ul>
+        {medias.map((media: Media) => (
+          <li key={media.imdbID}>
+            <MediaItem
+              title={media.title}
+              year={media.year}
+              type={media.type}
+              poster={media.poster}
+              imdbID={media.imdbID}
+            />
+            <button
+              onClick={() => {
+                handleAdd(media.imdbID, media.type);
+              }}
+            >
+              Add
+            </button>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
+function LibraryComponent(
+  library: Library,
+  handleRemove: (imdbID: string, mediaType: string) => Promise<void>
+) {
+  return (
+    <div>
+      <h2>{library.name}</h2>
+      <p>{library.keywords}</p>
+      <div>
         <ul>
-          {medias.map((media: Media) => (
+          {library.media.map((media: Media) => (
             <li key={media.imdbID}>
               <MediaItem
                 title={media.title}
@@ -107,12 +194,17 @@ const UpdateLibrary = () => {
                 poster={media.poster}
                 imdbID={media.imdbID}
               />
+              <button
+                onClick={() => {
+                  handleRemove(media.imdbID, media.type);
+                }}
+              >
+                Remove
+              </button>
             </li>
           ))}
         </ul>
-      )}
-    </>
+      </div>
+    </div>
   );
-};
-
-export default UpdateLibrary;
+}

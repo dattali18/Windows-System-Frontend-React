@@ -115,7 +115,7 @@ export const getTvSeriesInLibrary = async (id: string) => {
 };
 
 // Function to add a movie to a library
-export const addMovieToLibrary = async (libraryId: string, imdbID: string) => {
+export const addMovieToLibrary = async (libraryId: number, imdbID: string) => {
   try {
     const response = await axios.post(
       `${BASE_URL}/Libraries/${libraryId}/movies?imdbID=${imdbID}`
@@ -132,7 +132,7 @@ export const addMovieToLibrary = async (libraryId: string, imdbID: string) => {
 
 // Function to add a TV series to a library
 export const addTvSeriesToLibrary = async (
-  libraryId: string,
+  libraryId: number,
   imdbID: string
 ) => {
   try {
@@ -151,7 +151,7 @@ export const addTvSeriesToLibrary = async (
 
 // Function to delete a movie from a library
 export const deleteMovieFromLibrary = async (
-  libraryId: string,
+  libraryId: number,
   imdbID: string
 ) => {
   try {
@@ -170,7 +170,7 @@ export const deleteMovieFromLibrary = async (
 
 // Function to delete a TV series from a library
 export const deleteTvSeriesFromLibrary = async (
-  libraryId: string,
+  libraryId: number,
   imdbID: string
 ) => {
   try {

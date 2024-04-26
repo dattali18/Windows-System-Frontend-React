@@ -10,7 +10,7 @@ const MediaItem = (media: Media) => {
       <p>Year: {media.year}</p>
       <p>Media Type: {media.type}</p>
       <p>IMDB ID: {media.imdbID}</p>
-      <img src={media.poster} alt={media.title} />
+      {/* <img src={media.poster} alt={media.title} /> */}
     </div>
   );
 };
