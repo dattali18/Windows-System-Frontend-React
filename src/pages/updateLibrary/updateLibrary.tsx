@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 import Library from "../../api/library.ts";
 import Media from "../../api/media.ts";
@@ -25,7 +25,7 @@ const UpdateLibrary = () => {
   const [library, setLibrary] = useState({} as Library);
   const [loadingLibrary, setLoadingLibrary] = useState(true);
 
-  const [medias, setMedias] = useState([]);
+  const [medias, setMedias] = useState([] as Media[]);
   const [loadingMedias, setLoadingMedias] = useState(false);
 
   const [searchTerm, setSearchTerm] = useState("");
@@ -46,67 +46,17 @@ const UpdateLibrary = () => {
     fetchLibrary();
   }, [libraryIdNumber]);
 
-  const handleSearch = async (mediaType: string, searchTerm: string) => {
-    try {
-      setLoadingMedias(true);
-      if (mediaType === "movie") {
-        const movies = await searchMovies(searchTerm);
-        setMedias(movies);
-      } else if (mediaType === "tv") {
-        const tvSeries = await searchTvSeries(searchTerm);
-        setMedias(tvSeries);
-      }
-      setLoadingMedias(false);
-    } catch (error) {
-      console.error("Error searching media:", error);
-    } finally {
-      setLoadingMedias(false);
-    }
-  };
-
-  const handleRemove = async (imdbID: string, mediaType: string) => {
-    try {
-      // check with the user is he is sure to remove the media
-      const confirmRemove = window.confirm(
-        "Are you sure you want to remove this media?"
-      );
-      if (!confirmRemove) {
-        return;
-      }
-      // console.log(`remove media with imdbID ${imdbID} & mediaType ${mediaType}`);
-      setLoadingLibrary(true);
-      if (mediaType === "movie") {
-        await deleteMovieFromLibrary(libraryIdNumber, imdbID);
-      } else if (mediaType === "series") {
-        await deleteTvSeriesFromLibrary(libraryIdNumber, imdbID);
-      }
-      const updatedLibrary = await getLibraryById(libraryIdNumber);
-      setLibrary(updatedLibrary);
-      setLoadingLibrary(false);
-    } catch (error) {
-      console.error("Error removing media:", error);
-    } finally {
-      setLoadingLibrary(false);
-    }
-  };
-
-  const handleAdd = async (imdbID: string, mediaType: string) => {
-    try {
-      setLoadingLibrary(true);
-      if (mediaType === "movie") {
-        await addMovieToLibrary(libraryIdNumber, imdbID);
-      } else {
-        await addTvSeriesToLibrary(libraryIdNumber, imdbID);
-      }
-      const updatedLibrary = await getLibraryById(libraryIdNumber);
-      setLibrary(updatedLibrary);
-      setLoadingLibrary(false);
-    } catch (error) {
-      console.error("Error adding media:", error);
-    } finally {
-      setLoadingLibrary(false);
-    }
-  };
+  const handleSearch = searchForMedias(setLoadingMedias, setMedias);
+  const handleRemove = removeItemFromLibrary(
+    setLoadingLibrary,
+    libraryIdNumber,
+    setLibrary
+  );
+  const handleAdd = addItemToLibrary(
+    setLoadingLibrary,
+    libraryIdNumber,
+    setLibrary
+  );
 
   return (
     <>
@@ -145,8 +95,87 @@ const UpdateLibrary = () => {
 
 export default UpdateLibrary;
 
+function searchForMedias(
+  setLoadingMedias: React.Dispatch<React.SetStateAction<boolean>>,
+  setMedias: React.Dispatch<React.SetStateAction<Media[]>>
+) {
+  return async (mediaType: string, searchTerm: string) => {
+    try {
+      setLoadingMedias(true);
+      if (mediaType === "movie") {
+        const movies = await searchMovies(searchTerm);
+        setMedias(movies);
+      } else if (mediaType === "tv") {
+        const tvSeries = await searchTvSeries(searchTerm);
+        setMedias(tvSeries);
+      }
+      setLoadingMedias(false);
+    } catch (error) {
+      console.error("Error searching media:", error);
+    } finally {
+      setLoadingMedias(false);
+    }
+  };
+}
+
+function addItemToLibrary(
+  setLoadingLibrary: React.Dispatch<React.SetStateAction<boolean>>,
+  libraryIdNumber: number,
+  setLibrary: React.Dispatch<React.SetStateAction<Library>>
+) {
+  return async (imdbID: string, mediaType: string) => {
+    try {
+      setLoadingLibrary(true);
+      if (mediaType === "movie") {
+        await addMovieToLibrary(libraryIdNumber, imdbID);
+      } else {
+        await addTvSeriesToLibrary(libraryIdNumber, imdbID);
+      }
+      const updatedLibrary = await getLibraryById(libraryIdNumber);
+      setLibrary(updatedLibrary);
+      setLoadingLibrary(false);
+    } catch (error) {
+      console.error("Error adding media:", error);
+    } finally {
+      setLoadingLibrary(false);
+    }
+  };
+}
+
+function removeItemFromLibrary(
+  setLoadingLibrary: React.Dispatch<React.SetStateAction<boolean>>,
+  libraryIdNumber: number,
+  setLibrary: React.Dispatch<React.SetStateAction<Library>>
+) {
+  return async (imdbID: string, mediaType: string) => {
+    try {
+      // check with the user is he is sure to remove the media
+      const confirmRemove = window.confirm(
+        "Are you sure you want to remove this media?"
+      );
+      if (!confirmRemove) {
+        return;
+      }
+      // console.log(`remove media with imdbID ${imdbID} & mediaType ${mediaType}`);
+      setLoadingLibrary(true);
+      if (mediaType === "movie") {
+        await deleteMovieFromLibrary(libraryIdNumber, imdbID);
+      } else if (mediaType === "series") {
+        await deleteTvSeriesFromLibrary(libraryIdNumber, imdbID);
+      }
+      const updatedLibrary = await getLibraryById(libraryIdNumber);
+      setLibrary(updatedLibrary);
+      setLoadingLibrary(false);
+    } catch (error) {
+      console.error("Error removing media:", error);
+    } finally {
+      setLoadingLibrary(false);
+    }
+  };
+}
+
 function SearchMediaComponent(
-  medias: never[],
+  medias: Media[],
   handleAdd: (imdbID: string, mediaType: string) => Promise<void>
 ) {
   return (
@@ -179,10 +208,12 @@ function LibraryComponent(
   library: Library,
   handleRemove: (imdbID: string, mediaType: string) => Promise<void>
 ) {
+  // const navigate = useNavigate();
   return (
     <div>
       <h2>{library.name}</h2>
       <p>{library.keywords}</p>
+      <Link to={"/library/create/" + library.id} >update</Link>
       <div>
         <ul>
           {library.media.map((media: Media) => (

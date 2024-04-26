@@ -4,11 +4,15 @@ const Movie = (movie: MovieProps) => {
   return (
     <div>
       <h2>{movie.title}</h2>
-      <p>Genre: {movie.genre}</p>
-      <p>Rating: {movie.rating}</p>
-      <p>Year: {movie.year}</p>
-      <p>IMDb ID: {movie.imdbID}</p>
-      <p>Time: {movie.time} minutes</p>
+      <ul>
+        {movie.genre.split(",").map((keyword: string) => (
+          <li key={keyword}>{keyword}</li>
+        ))}
+      </ul>
+      <p>{movie.rating}</p>
+      <p>{movie.year}</p>
+      <p>{movie.imdbID}</p>
+      <p>{movie.time} minutes</p>
       <img src={movie.posterURL} alt={movie.title} />
     </div>
   );

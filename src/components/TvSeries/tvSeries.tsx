@@ -4,9 +4,13 @@ const TvSeries = (tvSeries: TvSeriesProps) => {
   return (
     <div>
       <h2>{tvSeries.title}</h2>
-      <p>Genre: {tvSeries.genre}</p>
-      <p>Year: {tvSeries.years}</p>
-      <p>Rating: {tvSeries.rating}</p>
+      <ul>
+        {tvSeries.genre.split(",").map((keyword: string) => (
+          <li key={keyword}>{keyword}</li>
+        ))}
+      </ul>
+      <p>{tvSeries.years}</p>
+      <p>Rating {tvSeries.rating}</p>
       <p>Seasons: {tvSeries.totalSeasons}</p>
       <img src={tvSeries.posterURL} alt={tvSeries.title} />
     </div>

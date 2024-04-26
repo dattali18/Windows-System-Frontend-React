@@ -6,8 +6,14 @@ import Library from "../../api/library.ts";
 const LibraryItem = (library: Library) => {
   return (
     <div>
-      <Link to={`/library/${library.id}`}><h1>{library.name}</h1></Link>
-      <p>Keywords: {library.keywords}</p>
+      <Link to={`/library/${library.id}`}>
+        <h1>{library.name}</h1>
+      </Link>
+      <ul>
+        {library.keywords.split(",").map((keyword: string) => (
+          <li key={keyword}>{keyword}</li>
+        ))}
+      </ul>
     </div>
   );
 };

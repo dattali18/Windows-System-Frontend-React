@@ -82,9 +82,9 @@ export const updateLibrary = async (
 };
 
 // Function to delete a library
-export const deleteLibrary = async (id: string) => {
+export const deleteLibrary = async (id: number) => {
   try {
-    const response = await axios.delete(`${BASE_URL}/Libraries/${id}`);
+    const response = await axios.delete(`${BASE_URL}/Libraries?id=${id}`);
     return response.data;
   } catch (error) {
     console.error(`Error deleting library with ID ${id}:`, error);
@@ -93,7 +93,7 @@ export const deleteLibrary = async (id: string) => {
 };
 
 // Function to get all movies in a library
-export const getMoviesInLibrary = async (id: string) => {
+export const getMoviesInLibrary = async (id: number) => {
   try {
     const response = await axios.get(`${BASE_URL}/Libraries/${id}/movies`);
     return response.data;
@@ -104,7 +104,7 @@ export const getMoviesInLibrary = async (id: string) => {
 };
 
 // Function to get all TV series in a library
-export const getTvSeriesInLibrary = async (id: string) => {
+export const getTvSeriesInLibrary = async (id: number) => {
   try {
     const response = await axios.get(`${BASE_URL}/Libraries/${id}/tvseries`);
     return response.data;

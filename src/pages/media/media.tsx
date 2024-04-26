@@ -19,13 +19,13 @@ const Media = () => {
   useEffect(() => {
     const fetchMovie = async () => {
       setLoading(true);
-      let movie;
+      let media;
       if (mediaType === "movie") {
-        movie = await getMovieByImdbID(imdbId ?? "");
+        media = await getMovieByImdbID(imdbId ?? "");
       } else {
-        movie = await getTvSeriesByImdbId(imdbId ?? "");
+        media = await getTvSeriesByImdbId(imdbId ?? "");
       }
-      setMovie(movie);
+      setMovie(media);
       setLoading(false);
     };
     fetchMovie();

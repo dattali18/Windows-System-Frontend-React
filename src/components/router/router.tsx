@@ -22,6 +22,8 @@ const Router = () => {
             path="library/update/:libraryId"
             element={<UpdateLibrary />}
           />
+          <Route path="search" element={<h1>Search</h1>} />
+          <Route path="*" element={<h1>Not Found</h1>} />
         </Route>
       </Routes>
     </BrowserRouter>

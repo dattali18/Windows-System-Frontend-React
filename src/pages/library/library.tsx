@@ -1,22 +1,23 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate, Link } from "react-router-dom";
 
-import { getLibraryById } from "../../api/librariesApi";
+import { getLibraryById, deleteLibrary } from "../../api/librariesApi.ts";
 
-import Media from "../../api/media";
+import { default as LibraryProps } from "../../api/library.ts";
+import Media from "../../api/media.ts";
 
-import MediaItem from "../../components/mediaItem/mediaItem";
+import MediaItem from "../../components/mediaItem/mediaItem.tsx";
 
 const Library = () => {
-  // get the libaryId from the URL
+  // get the libraryId from the URL
   const { libraryId } = useParams();
 
   const libraryIdInt = parseInt(libraryId || "0");
 
-  const [library, setLibrary] = useState(
-    {} as { name: string; keywords: string; media: [] }
-  );
+  const [library, setLibrary] = useState({} as LibraryProps);
   const [loading, setLoading] = useState(true);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchLibrary = async () => {
@@ -30,6 +31,22 @@ const Library = () => {
     fetchLibrary();
   }, [libraryIdInt]);
 
+  const handleDelete = async () => {
+    // check if the user wants to delete the library
+    // call the deleteLibrary API function
+    // redirect to the libraries page
+    const confirmDelete = window.confirm(
+      `Are you sure you want to delete ${library.name}?`
+    );
+    
+    if (!confirmDelete) {
+      return;
+    }
+
+    await deleteLibrary(libraryIdInt);
+    navigate("/libraries");
+  };
+
   return (
     <>
       {loading ? (
@@ -37,9 +54,17 @@ const Library = () => {
       ) : (
         <div>
           <h1>{library.name}</h1>
-          <h2>{library.keywords}</h2>
+          <ul>
+            {library.keywords.split(",").map((keyword: string) => (
+              <li key={keyword}>{keyword}</li>
+            ))}
+          </ul>
         </div>
       )}
+      <div>
+        <Link to={`/library/update/${libraryId}`}>Update</Link>
+        <button onClick={handleDelete}>Delete</button>
+      </div>
       <h2>Media</h2>
       <ul>
         {library.media?.length > 0 ? (
