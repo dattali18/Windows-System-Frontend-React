@@ -73,7 +73,7 @@ export const updateLibrary = async (
   library: { name: string; keywords: string }
 ) => {
   try {
-    const response = await axios.put(`${BASE_URL}/Libraries/${id}`, library);
+    const response = await axios.put(`${BASE_URL}/Libraries?id=${id}`, library);
     return response.data;
   } catch (error) {
     console.error(`Error updating library with ID ${id}:`, error);

@@ -4,6 +4,7 @@ import Home from "../../pages/home/home.tsx";
 import Libraries from "../../pages/libraries/libraries.tsx";
 import Library from "../../pages/library/library.tsx";
 import Media from "../../pages/media/media.tsx";
+import LibraryForm from "../../pages/libraryForm/libraryForm.tsx";
 import Layout from "../layout/layout.tsx";
 
 const Router = () => {
@@ -15,9 +16,9 @@ const Router = () => {
           <Route path="libraries" element={<Libraries />} />
           <Route path="library/:libraryId" element={<Library />} />
           <Route path="media/:mediaType/:imdbId" element={<Media />} />
-          <Route path="library/create" element={<h1>Create Library</h1>} />
+          <Route path="library/create/:libraryId?" element={<LibraryForm />} />
           <Route
-            path="library:libraryId/update"
+            path="library/update/:libraryId"
             element={<h1>Update Library</h1>}
           />
         </Route>
