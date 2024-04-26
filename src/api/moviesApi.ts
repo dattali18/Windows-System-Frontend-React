@@ -24,15 +24,15 @@ const getMovieById = async (id: string) => {
 };
 
 // Function to search movies by title and year
-const searchMovies = async (title: string, year: string) => {
+const searchMovies = async (title: string) => {
   try {
     const response = await axios.get(
-      `${BASE_URL}/Movies/search/?s=${title}&y=${year}`
+      `${BASE_URL}/Movies/search/?s=${title}`
     );
     return response.data;
   } catch (error) {
     console.error(
-      `Error searching movies with title ${title} and year ${year}:`,
+      `Error searching movies with title ${title}`,
       error
     );
     throw error;

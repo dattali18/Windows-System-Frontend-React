@@ -21,15 +21,15 @@ const getTvSeriesById = async (id: string) => {
   }
 };
 
-const searchTvSeries = async (query: string, year?: number) => {
+const searchTvSeries = async (query: string) => {
   try {
     const response = await axios.get(
-      `${BASE_URL}/TvSeries/search/?s=${query}&y=${year}`
+      `${BASE_URL}/TvSeries/search/?s=${query}`
     );
     return response.data;
   } catch (error) {
     console.error(
-      `Error searching TV series with query ${query} and year ${year}:`,
+      `Error searching TV series with query ${query}`,
       error
     );
     throw error;

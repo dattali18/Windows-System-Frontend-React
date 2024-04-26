@@ -43,17 +43,17 @@ const Library = () => {
       <h2>Media</h2>
       <ul>
         {library.media?.length > 0 ? (
-        library.media.map((media: Media) => (
+          library.media.map((media: Media) => (
             <li key={media.imdbID}>
-                <MediaItem
-                    title={media.title}
-                    year={media.year}
-                    type={media.type}
-                    poster={media.poster}
-                    imdbID={media.imdbID}
-                />
+              <MediaItem
+                title={media.title}
+                year={media.year}
+                type={media.type}
+                poster={media.poster}
+                imdbID={media.imdbID}
+              />
             </li>
-        ))
+          ))
         ) : (
           <p>No media found.</p>
         )}
