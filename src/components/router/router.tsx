@@ -6,6 +6,7 @@ import Library from "../../pages/library/library.tsx";
 import Media from "../../pages/media/media.tsx";
 import LibraryForm from "../../pages/libraryForm/libraryForm.tsx";
 import UpdateLibrary from "../../pages/updateLibrary/updateLibrary.tsx";
+import Search from "../../pages/search/search.tsx";
 import Layout from "../layout/layout.tsx";
 
 const Router = () => {
@@ -22,7 +23,7 @@ const Router = () => {
             path="library/update/:libraryId"
             element={<UpdateLibrary />}
           />
-          <Route path="search" element={<h1>Search</h1>} />
+          <Route path="search" element={<Search />} />
           <Route path="*" element={<h1>Not Found</h1>} />
         </Route>
       </Routes>
