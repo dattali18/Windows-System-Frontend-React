@@ -1,97 +1,57 @@
-.search-input, .search-select, .search-button {
-    padding: 10px;
+.search-input,
+.search-select,
+.search-button {
+  padding: 10px;
 
-    border-radius: 8px;
+  border-radius: 8px;
 
-    background-color: var(--grey-2);
-    color: var(--gray-1);
+  background-color: var(--grey-2);
+  color: var(--gray-1);
 
-    font-size: 1rem;
-    font-weight: 600;
+  font-size: 1rem;
+  font-weight: 600;
 
-    outline: none;
-    border: none;
+  outline: none;
+  border: none;
 
-    margin-bottom: .5rem;
+  /* margin-bottom: 0.5rem; */
+  margin: 0;
 }
 
 .search-form {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
-    gap: .5rem;
+  gap: 0.5rem;
 
-    margin-bottom: 2rem;
+  margin: 2rem 0;
 }
 
 .search-input {
-    width: 80%;
+  width: 80%;
 
-    padding: 10px 1rem;
+  padding: 10px 1rem;
 }
 
-.search-select {}
-
 .search-button {
-    cursor: pointer;
-    padding: 10px 20px;
-    background-color: var(--pink);
+  cursor: pointer;
+  padding: 10px 20px;
+  background-color: var(--pink);
 }
 
 .search-button:hover {
-    opacity: .8;
+  opacity: 0.8;
 }
 
 .media-list {
-    display: flex;
-    flex-wrap: wrap;
+  display: flex;
+  flex-wrap: wrap;
 
-    justify-content: center;
-    align-items: space-between;
+  justify-content: center;
+  align-items: space-between;
 
+  gap: 2rem;
 
-    gap: 2rem;
-
-    list-style: none;
-}
-
-.media-list-item {
-    background-color: var(--grey-2);
-    border-radius: 10px;
-
-    width: 20%;
-
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-
-
-    /* add shadow, smoother */
-    box-shadow: 0 0 10px rgba(0, 0, 0, .2);
-}
-
-.media-title {
-    padding: 1rem;
-    font-size: 1.2rem;
-    font-weight: 600;
-
-    line-break: auto;
-}
-
-.media-img {
-    /* make the image not bigger than the width of the media-list-item */
-    max-width: 100%;
-    height: auto;
-
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
-}
-
-.media-info {
-    padding: .2rem 1rem;
-    font-size: 1rem;
-    font-weight: 500;
-
-    padding-bottom: .2rem;
+  list-style: none;
 }

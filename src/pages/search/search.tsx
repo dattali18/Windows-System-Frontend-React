@@ -3,14 +3,16 @@ import { useState } from "react";
 import { searchMovies } from "../../api/moviesApi.ts";
 import { searchTvSeries } from "../../api/tvSeriesApi.ts";
 
-import Media from "../../api/media.ts";
+import Media from "../../components/mediaItem/mediaItem.tsx";
+
+import {default as MediaProps} from "../../api/media.ts";
 
 import "./search.css";
 
 const Search = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [mediaType, setMediaType] = useState("movie");
-  const [medias, setMedias] = useState([] as Media[]);
+  const [medias, setMedias] = useState([] as MediaProps[]);
 
   const handleSearch = async () => {
     if (mediaType === "movie") {
@@ -51,12 +53,14 @@ const Search = () => {
         </div>
         <ul className="media-list">
           {medias.map((media) => (
-            <li className="media-list-item" key={media.imdbID}>
-              <img className="media-img" src={media.poster} alt={media.title} />
-              <p className="media-title">{media.title}</p>
-              <p className="media-info">
-                {media.type} - {media.year}
-              </p>
+            <li key={media.imdbID}>
+              <Media 
+                title={media.title}
+                poster={media.poster}
+                year={media.year}
+                imdbID={media.imdbID}
+                type={media.type}
+               />
             </li>
           ))}
         </ul>

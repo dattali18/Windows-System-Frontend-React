@@ -1,12 +1,14 @@
 import { useEffect, useState } from "react";
-import { useParams, useNavigate, Link } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 
-import { getLibraryById, deleteLibrary } from "../../api/librariesApi.ts";
+import { deleteLibrary, getLibraryById } from "../../api/librariesApi.ts";
 
 import { default as LibraryProps } from "../../api/library.ts";
 import Media from "../../api/media.ts";
 
 import MediaItem from "../../components/mediaItem/mediaItem.tsx";
+
+import "./library.css";
 
 const Library = () => {
   // get the libraryId from the URL
@@ -38,7 +40,7 @@ const Library = () => {
     const confirmDelete = window.confirm(
       `Are you sure you want to delete ${library.name}?`
     );
-    
+
     if (!confirmDelete) {
       return;
     }
@@ -50,23 +52,34 @@ const Library = () => {
   return (
     <>
       {loading ? (
-        <p>Loading...</p>
+        <p className="loading">Loading...</p>
       ) : (
-        <div>
-          <h1>{library.name}</h1>
-          <ul>
-            {library.keywords.split(",").map((keyword: string) => (
-              <li key={keyword}>{keyword}</li>
-            ))}
-          </ul>
+        <div id="library">
+          <h1 className="page-header">{library.name}</h1>
+          <div className="controller">
+            <ul className="library-keywords">
+              {library.keywords.split(",").map((keyword: string) => (
+                <li className="keyword tag-blue" key={keyword}>
+                  {keyword}
+                </li>
+              ))}
+            </ul>
+            <div className="library-control">
+              <Link
+                className="update-btn btn"
+                to={`/library/update/${libraryId}`}
+              >
+                Update
+              </Link>
+              <button className="delete-btn btn" onClick={handleDelete}>
+                Delete
+              </button>
+            </div>
+          </div>
         </div>
       )}
-      <div>
-        <Link to={`/library/update/${libraryId}`}>Update</Link>
-        <button onClick={handleDelete}>Delete</button>
-      </div>
-      <h2>Media</h2>
-      <ul>
+      <h2 className="media-header">Media</h2>
+      <ul className="media-list">
         {library.media?.length > 0 ? (
           library.media.map((media: Media) => (
             <li key={media.imdbID}>
@@ -80,7 +93,7 @@ const Library = () => {
             </li>
           ))
         ) : (
-          <p>No media found.</p>
+          <p className="library-not-found">No media found.</p>
         )}
       </ul>
     </>

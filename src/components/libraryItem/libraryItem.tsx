@@ -11,7 +11,7 @@ const LibraryItem = (library: Library) => {
       </Link>
       <ul className="library-keywords">
         {library.keywords.split(",").map((keyword: string) => (
-          <li className={"keyword tag-pink"} key={keyword}>
+          <li className={"keyword tag-blue"} key={keyword}>
             {keyword}
           </li>
         ))}

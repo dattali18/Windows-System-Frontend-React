@@ -28,40 +28,40 @@ const Libraries = () => {
     <div id="libraries">
       <h1 className="page-header">Libraries</h1>
       <div className="page-main">
-        <input
-          className="search-input"
-          type="text"
-          placeholder="Search Library"
-          onChange={(e) => {
-            const searchTerm = e.target.value;
-            setFilteredLibraries([...libraries]);
-            const filteredLibraries = libraries.filter(
-              (library: { name: string }) => {
-                return library.name
-                  .toLowerCase()
-                  .includes(searchTerm.toLowerCase());
-              }
-            );
-            setFilteredLibraries(filteredLibraries);
-          }}
-        />
+        <div className="search-form">
+          <input
+            className="search-input"
+            type="text"
+            placeholder="Search Library"
+            onChange={(e) => {
+              const searchTerm = e.target.value;
+              setFilteredLibraries([...libraries]);
+              const filteredLibraries = libraries.filter(
+                (library: { name: string }) => {
+                  return library.name
+                    .toLowerCase()
+                    .includes(searchTerm.toLowerCase());
+                }
+              );
+              setFilteredLibraries(filteredLibraries);
+            }}
+          />
+        </div>
         {loading ? (
-          <p>Loading...</p>
+          <p className="loading">Loading...</p>
         ) : (
           <ul className="libraries">
             {filteredLibraries?.length > 0 ? (
-              filteredLibraries.map(
-                (library: Library) => (
-                  <li key={library.id}>
-                    <LibraryItem
-                      id={library.id}
-                      name={library.name}
-                      keywords={library.keywords}
-                      media={library.media}
-                    />
-                  </li>
-                )
-              )
+              filteredLibraries.map((library: Library) => (
+                <li key={library.id}>
+                  <LibraryItem
+                    id={library.id}
+                    name={library.name}
+                    keywords={library.keywords}
+                    media={library.media}
+                  />
+                </li>
+              ))
             ) : (
               <p>No libraries found.</p>
             )}

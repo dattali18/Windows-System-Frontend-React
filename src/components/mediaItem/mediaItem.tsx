@@ -1,16 +1,18 @@
 import { Link } from "react-router-dom";
 import Media from "../../api/media";
 
+import "./mediaItem.css";
+
 const MediaItem = (media: Media) => {
   return (
-    <div>
-      <Link to={`/media/${media.type}/${media.imdbID}`}>
-        <h2>{media.title}</h2>
+    <div className="media-list-item">
+      <img className="media-img" src={media.poster} alt={media.title} />
+      <Link className="media-title" to={`/media/${media.type}/${media.imdbID}`}>
+        {media.title}
       </Link>
-      <p>Year: {media.year}</p>
-      <p>Media Type: {media.type}</p>
-      <p>IMDB ID: {media.imdbID}</p>
-      {/* <img src={media.poster} alt={media.title} /> */}
+      <p className="media-info">
+        {media.type} - <span className="pink">{media.year}</span>
+      </p>
     </div>
   );
 };

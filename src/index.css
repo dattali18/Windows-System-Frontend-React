@@ -96,3 +96,40 @@ body {
   background-color: var(--orange-sec);
   color: var(--orange);
 }
+
+.red {
+  color: var(--red);
+}
+
+.blue {
+  color: var(--blue);
+}
+
+.green {
+  color: var(--green);
+}
+
+.yellow {
+  color: var(--yellow);
+}
+
+.purple {
+  color: var(--purple);
+}
+
+.pink {
+  color: var(--pink);
+}
+
+.indigo {
+  color: var(--indigo);
+}
+
+.cyan {
+  color: var(--cyan);
+}
+
+.orange {
+  color: var(--orange);
+}
+
