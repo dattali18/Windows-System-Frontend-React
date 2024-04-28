@@ -11,6 +11,8 @@
 
     outline: none;
     border: none;
+
+    margin-bottom: .5rem;
 }
 
 .search-form {

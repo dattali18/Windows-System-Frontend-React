@@ -1,0 +1,27 @@
+.search-input {
+    min-width: 100%;
+
+    padding: 10px;
+
+    border-radius: 8px;
+
+    background-color: var(--grey-2);
+    color: var(--gray-1);
+
+    font-size: 1rem;
+    font-weight: 600;
+
+    outline: none;
+    border: none;
+
+    margin-top: 2rem;
+}
+
+.libraries {
+    display: flex;
+    flex-direction: column;
+
+    gap: 1rem;
+
+    list-style: none;
+}

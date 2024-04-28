@@ -1,19 +1,24 @@
 import { Link } from "react-router-dom";
 import Library from "../../api/library.ts";
 
-// import MediaItem from "../mediaItem/mediaItem.tsx";
+import "./libraryItem.css";
 
 const LibraryItem = (library: Library) => {
   return (
-    <div>
-      <Link to={`/library/${library.id}`}>
+    <div className="library-item">
+      <Link className="library-item-header" to={`/library/${library.id}`}>
         <h1>{library.name}</h1>
       </Link>
-      <ul>
+      <ul className="library-keywords">
         {library.keywords.split(",").map((keyword: string) => (
-          <li key={keyword}>{keyword}</li>
+          <li className={"keyword tag-pink"} key={keyword}>
+            {keyword}
+          </li>
         ))}
       </ul>
+      <p className="library-media">
+        {library.media.length} {library.media.length === 1 ? "item" : "items"}
+      </p>
     </div>
   );
 };
