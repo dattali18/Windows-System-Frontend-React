@@ -49,13 +49,14 @@ const Search = () => {
             Search
           </button>
         </div>
-        <ul>
+        <ul className="media-list">
           {medias.map((media) => (
-            <li key={media.imdbID}>
-              <p>{media.title}</p>
-              <p>{media.year}</p>
-              <p>{media.type}</p>
-              <img src={media.poster} alt={media.title} height={200} />
+            <li className="media-list-item" key={media.imdbID}>
+              <img className="media-img" src={media.poster} alt={media.title} />
+              <p className="media-title">{media.title}</p>
+              <p className="media-info">
+                {media.type} - {media.year}
+              </p>
             </li>
           ))}
         </ul>
