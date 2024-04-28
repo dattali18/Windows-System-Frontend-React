@@ -1,0 +1,39 @@
+.search-input, .search-select, .search-button {
+    padding: 10px;
+
+    border-radius: 10px;
+
+    background-color: var(--grey-2);
+    color: var(--gray-1);
+
+    font-size: 1rem;
+    font-weight: 600;
+
+    outline: none;
+    border: none;
+}
+
+.search-form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    gap: .5rem;
+
+}
+
+.search-input {
+    width: 80%;
+}
+
+.search-select {}
+
+.search-button {
+    cursor: pointer;
+    padding: 10px 20px;
+    background-color: var(--pink);
+}
+
+.search-button:hover {
+    opacity: .8;
+}
