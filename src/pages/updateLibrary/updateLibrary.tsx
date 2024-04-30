@@ -15,6 +15,10 @@ import { searchMovies } from "../../api/moviesApi";
 import { searchTvSeries } from "../../api/tvSeriesApi";
 
 import MediaItem from "../../components/mediaItem/mediaItem.tsx";
+import {default as AddIcon} from "../../components/icons/add.tsx";
+import {default as RemoveIcon} from "../../components/icons/remove.tsx";
+
+import "./updateLibrary.css";
 
 const UpdateLibrary = () => {
   // getting the libraryId parameter from the URL
@@ -65,25 +69,34 @@ const UpdateLibrary = () => {
       ) : (
         LibraryComponent(library, handleRemove)
       )}
-      <h1>Search</h1>
-      <input
-        type="text"
-        placeholder="Search for a movie or TV series"
-        onChange={(e) => {
-          setSearchTerm(e.target.value);
-        }}
-      />
-      <select onChange={(e) => setMediaType(e.target.value)}>
-        <option value="movie">Movie</option>
-        <option value="tv">TV Series</option>
-      </select>
-      <button
-        onClick={() => {
-          handleSearch(mediaType, searchTerm);
-        }}
-      >
-        Search
-      </button>
+      <h1 className="page-header">Search</h1>
+      <div className="page-main">
+        <div className="search-form">
+          <input
+            className="search-input"
+            type="text"
+            placeholder="Search for a movie or TV series"
+            onChange={(e) => {
+              setSearchTerm(e.target.value);
+            }}
+          />
+          <select
+            className="search-select"
+            onChange={(e) => setMediaType(e.target.value)}
+          >
+            <option value="movie">Movie</option>
+            <option value="tv">TV Series</option>
+          </select>
+          <button
+            className="search-button"
+            onClick={() => {
+              handleSearch(mediaType, searchTerm);
+            }}
+          >
+            Search
+          </button>
+        </div>
+      </div>
       {loadingMedias ? (
         <p>Loading...</p>
       ) : (
@@ -180,9 +193,9 @@ function SearchMediaComponent(
 ) {
   return (
     <div>
-      <ul>
+      <ul className="media-list">
         {medias.map((media: Media) => (
-          <li key={media.imdbID}>
+          <li className="media-list-item" key={media.imdbID}>
             <MediaItem
               title={media.title}
               year={media.year}
@@ -191,10 +204,12 @@ function SearchMediaComponent(
               imdbID={media.imdbID}
             />
             <button
+            className="btn add-btn"
               onClick={() => {
                 handleAdd(media.imdbID, media.type);
               }}
             >
+              <AddIcon className="icon white-icon" />
               Add
             </button>
           </li>
@@ -211,13 +226,24 @@ function LibraryComponent(
   // const navigate = useNavigate();
   return (
     <div>
-      <h2>{library.name}</h2>
-      <p>{library.keywords}</p>
-      <Link to={"/library/create/" + library.id} >update</Link>
+      <h1 className="page-header">{library.name}</h1>
+      {/* <p>{library.keywords}</p> */}
+      <div className="controller">
+        <ul className="library-keywords">
+          {library.keywords.split(",").map((keyword: string) => (
+            <li className={"keyword tag-blue"} key={keyword}>
+              {keyword}
+            </li>
+          ))}
+        </ul>
+        <Link className="btn update-btn" to={"/library/create/" + library.id}>
+          update
+        </Link>
+      </div>
       <div>
-        <ul>
+        <ul className="media-list">
           {library.media.map((media: Media) => (
-            <li key={media.imdbID}>
+            <li className="media-list-item" key={media.imdbID}>
               <MediaItem
                 title={media.title}
                 year={media.year}
@@ -226,10 +252,12 @@ function LibraryComponent(
                 imdbID={media.imdbID}
               />
               <button
+                className="btn remove-btn"
                 onClick={() => {
                   handleRemove(media.imdbID, media.type);
                 }}
               >
+                <RemoveIcon className="icon white-icon" />
                 Remove
               </button>
             </li>

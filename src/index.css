@@ -133,3 +133,6 @@ body {
   color: var(--orange);
 }
 
+.white-icon path{
+  fill: var(--white);
+}
