@@ -7,8 +7,8 @@ import { getTvSeriesByImdbId } from "../../api/tvSeriesApi.ts";
 import { default as MovieProps } from "../../api/movie.ts";
 import { default as TvSeriesProps } from "../../api/tvSeries.ts";
 
-import Movie from "../../components/Movie/movie.tsx";
-import TvSeries from "../../components/TvSeries/tvSeries.tsx";
+import Movie from "../../components/movie/movie.tsx";
+import TvSeries from "../../components/tvSeries/tvSeries.tsx";
 
 const Media = () => {
   const { mediaType, imdbId } = useParams();
