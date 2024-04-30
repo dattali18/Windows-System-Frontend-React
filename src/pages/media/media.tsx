@@ -10,6 +10,8 @@ import { default as TvSeriesProps } from "../../api/tvSeries.ts";
 import Movie from "../../components/movie/movie.tsx";
 import TvSeries from "../../components/tvSeries/tvSeries.tsx";
 
+import "./media.css";
+
 const Media = () => {
   const { mediaType, imdbId } = useParams();
 
@@ -37,6 +39,9 @@ const Media = () => {
         <p>Loading...</p>
       ) : (
         <>
+          <h1 className="page-header">
+            {mediaType === "movie" ? "Movie " : "Tv Series "}
+            Info</h1>
           {mediaType === "movie" ? (
             <Movie {...(movie as MovieProps)} />
           ) : (

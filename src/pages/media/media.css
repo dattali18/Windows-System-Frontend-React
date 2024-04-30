@@ -1,0 +1,32 @@
+.media-main {
+    display: flex;
+    align-items: start;
+    justify-content: start;
+
+    margin: 1rem 0;
+}
+
+.media-info-group {
+    display: flex;
+    flex-direction: column;
+    /* align-items: start; */
+    justify-content: center;
+
+    height: 300px;
+}
+
+.media-info-group p {
+    font-size: 2rem;
+
+    padding: .4rem;
+}
+
+.media-poster {
+    width: 300px;
+    height: 450px;
+    object-fit: cover;
+
+    border-radius: 1rem;
+
+    margin-right: 3rem;
+}
