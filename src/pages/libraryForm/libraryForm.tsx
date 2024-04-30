@@ -1,13 +1,15 @@
 import { useEffect, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 import Library from "../../api/library.ts";
 
 import {
+  createLibrary,
   getLibraryById,
   updateLibrary,
-  createLibrary,
 } from "../../api/librariesApi";
+
+import "./libraryForm.css";
 
 const LibraryForm = () => {
   // getting the optional libraryId parameter from the URL
@@ -44,24 +46,23 @@ const LibraryForm = () => {
     // call the createLibrary or updateLibrary API function
     // redirect to the update library page with id given by the API
     const formData = {
-        name,
-        keywords: keywords.join(","),
+      name,
+      keywords: keywords.join(","),
     };
     if (libraryId) {
-        console.log("Updating library with ID:", libraryId);
-        
-        // Update library
-        // Call updateLibrary API function
-        const response = await updateLibrary(libraryId, formData);
-        // Redirect to the updated library page
-        navigate(`/library/${response.id}`);
+      console.log("Updating library with ID:", libraryId);
 
+      // Update library
+      // Call updateLibrary API function
+      const response = await updateLibrary(libraryId, formData);
+      // Redirect to the updated library page
+      navigate(`/library/${response.id}`);
     } else {
-        // Create library
-        // Call createLibrary API function
-        const response = await createLibrary(formData);
-        // Redirect to the created library page
-        navigate(`/library/update/${response.id}`);
+      // Create library
+      // Call createLibrary API function
+      const response = await createLibrary(formData);
+      // Redirect to the created library page
+      navigate(`/library/update/${response.id}`);
     }
   };
 
@@ -79,44 +80,58 @@ const LibraryForm = () => {
       {isLoading ? ( // Conditionally render the form based on loading state
         <div>Loading...</div>
       ) : (
-        <form onSubmit={handleOnSubmit}>
-          <h1>{libraryId ? "Update" : "Create"} Library</h1>
-          <div>
-            <label htmlFor="name">Name</label>
-            <input
-              type="text"
-              id="name"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-            />
-          </div>
-          <div>
-            <label>Keywords</label>
-            <div>
-              {allKeywords.map((keyword) => (
-                <div key={keyword}>
-                  <input
-                    type="checkbox"
-                    id={keyword}
-                    value={keyword}
-                    checked={keywords.includes(keyword)}
-                    onChange={(e) => {
-                      if (e.target.checked) {
-                        setKeywords([...keywords, keyword]);
-                      } else {
-                        setKeywords(keywords.filter((k) => k !== keyword));
-                      }
-                    }}
-                  />
-                  <label htmlFor={keyword}>{keyword}</label>
-                </div>
-              ))}
-            </div>
-          </div>
-          <button type="submit">
+        <>
+          <h1 className="page-header">
             {libraryId ? "Update" : "Create"} Library
-          </button>
-        </form>
+          </h1>
+          <div className="page-main">
+            <form 
+            className="library-form"
+            onSubmit={handleOnSubmit}>
+              <div className="input-group">
+                <label className="input-label" htmlFor="name">
+                  Name
+                </label>
+                <input
+                  className="input-field"
+                  type="text"
+                  id="name"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                />
+              </div>
+              <div className="input-group">
+                <label className="input-label" htmlFor="keywords">
+                  Keywords
+                </label>
+                <div className="input-checkboxes">
+                  {allKeywords.map((keyword) => (
+                    <div className="input-checkbox-group" key={keyword}>
+                      <input
+                        className="input-checkbox"
+                        type="checkbox"
+                        id={keyword}
+                        value={keyword}
+                        checked={keywords.includes(keyword)}
+                        onChange={(e) => {
+                          if (e.target.checked) {
+                            setKeywords([...keywords, keyword]);
+                          } else {
+                            setKeywords(keywords.filter((k) => k !== keyword));
+                          }
+                        }}
+                      />
+                      <label htmlFor={keyword}>{keyword}</label>
+                    </div>
+                  ))}
+                </div>
+              </div>
+              <button className="btn submit-btn" type="submit">
+                {libraryId ? "Update" : "Create"} Library
+              </button>
+            </form>
+          </div>
+        </>
       )}
     </>
   );
