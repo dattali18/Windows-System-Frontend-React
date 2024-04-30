@@ -5,6 +5,7 @@ import "./header.css";
 import { default as HouseIcon } from "../icons/home.tsx";
 import { default as LibraryIcon } from "../icons/library.tsx";
 import { default as SearchIcon } from "../icons/search.tsx";
+import { default as AddIcon } from "../icons/add.tsx";
 
 const Header = () => {
   return (
@@ -23,6 +24,10 @@ const Header = () => {
           <li className="navbar-item">
             <SearchIcon className="navbar-icon" />
             <Link to="/search">Search</Link>
+          </li>
+          <li className="navbar-item">
+            <AddIcon className="navbar-icon" />
+            <Link to="/library/create">Add Library</Link>
           </li>
         </ul>
       </nav>
