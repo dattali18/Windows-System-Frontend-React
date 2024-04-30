@@ -25,3 +25,9 @@ main {
 
     color: var(--gray-1);
 }
+
+.p-info {
+    font-size: 2rem;
+
+    text-align: center;
+}

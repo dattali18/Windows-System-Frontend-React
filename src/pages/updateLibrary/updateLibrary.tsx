@@ -193,6 +193,9 @@ function SearchMediaComponent(
 ) {
   return (
     <div>
+      {/* if the list is empty add a text saying it empty */}
+      {medias.length === 0 && <p className="p-info">No media found</p>}
+      {/* if the list is not empty show the list */}
       <ul className="media-list">
         {medias.map((media: Media) => (
           <li className="media-list-item" key={media.imdbID}>

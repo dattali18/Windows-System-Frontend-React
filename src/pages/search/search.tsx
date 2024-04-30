@@ -5,7 +5,7 @@ import { searchTvSeries } from "../../api/tvSeriesApi.ts";
 
 import Media from "../../components/mediaItem/mediaItem.tsx";
 
-import {default as MediaProps} from "../../api/media.ts";
+import { default as MediaProps } from "../../api/media.ts";
 
 import "./search.css";
 
@@ -51,16 +51,17 @@ const Search = () => {
             Search
           </button>
         </div>
+        {medias.length === 0 && <p className="p-info">No media found</p>}
         <ul className="media-list">
           {medias.map((media) => (
             <li key={media.imdbID}>
-              <Media 
+              <Media
                 title={media.title}
                 poster={media.poster}
                 year={media.year}
                 imdbID={media.imdbID}
                 type={media.type}
-               />
+              />
             </li>
           ))}
         </ul>
